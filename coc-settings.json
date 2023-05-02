@@ -1,0 +1,14 @@
+{
+  "languageserver": {
+    "clangd": {
+      "command": "clangd-11",
+      "rootPatterns": ["compile_flags.txt", "compile_commands.json"],
+      "filetypes": ["c", "cc", "cpp", "c++", "objc", "objcpp"],
+      "initializationOptions":{
+        "clangd.semanticHighlighting": true,
+        "coc.preferences.semanticTokensHighlights": false,
+        "semanticTokens.filetypes": ["c", "cpp", "td", "h", "hpp", "mlir"]
+      }
+    }
+  }
+}
