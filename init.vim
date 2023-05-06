@@ -10,8 +10,8 @@ set notimeout
 set jumpoptions=stack
 
 let mapleader="\<SPACE>"
-
-
+set termguicolors
+set background=dark
 if empty(glob('~/.config/nvim/autoload/plug.vim'))
   :exe '!curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
               \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
@@ -25,6 +25,7 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'preservim/nerdtree'
   " lsp
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  Plug 'preservim/nerdcommenter'
   Plug 'jackguo380/vim-lsp-cxx-highlight'
   Plug 'github/copilot.vim'
   Plug 'ctrlpvim/ctrlp.vim'
@@ -33,22 +34,59 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'nvim-treesitter/nvim-treesitter'
   Plug 'nvim-tree/nvim-web-devicons'
   Plug 'APZelos/blamer.nvim'
-  Plug 'ap/vim-buftabline'
+  Plug 'akinsho/bufferline.nvim', { 'tag': '*' } 
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
+  Plug 'brooth/far.vim'
   Plug 'ryanoasis/vim-devicons'
 call plug#end()
 
-let g:blamer_enabled = 1
+imap <silent><script><expr> <C-J> copilot#Accept("\<CR>")
+let g:copilot_no_tab_map = v:true
 
+set termguicolors
+let g:blamer_enabled = 1
+set termguicolors
+lua << EOF
+require("bufferline").setup{}
+EOF
 nnoremap <C-N> :bnext<CR>
 nnoremap <C-L> :bprev<CR>
 set termguicolors
 " ==== cateduo/vsdark.nvim ====
+" Create default mappings
+let g:NERDCreateDefaultMappings = 1
 
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+
+" Use compact syntax for prettified multi-line comments
+let g:NERDCompactSexyComs = 1
+
+" Align line-wise comment delimiters flush left instead of following code indentation
+let g:NERDDefaultAlign = 'left'
+
+" Set a language to use its alternate delimiters by default
+let g:NERDAltDelims_cpp = 1
+
+" Add your own custom formats or override the defaults
+let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
+
+" Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDCommentEmptyLines = 1
+
+" Enable trimming of trailing whitespace when uncommenting
+let g:NERDTrimTrailingWhitespace = 1
+
+" Enable NERDCommenterToggle to check all selected lines is commented or not 
+let g:NERDToggleCheckAllLines = 1
 set termguicolors
 let g:vsdark_style = "dark"
 colorscheme vsdark
+
+if has('mouse')
+  set mouse=r
+endif
 
 " ==== preservim/nerdtree ====
 lua <<EOF
